@@ -39,48 +39,48 @@
 #               print(sess.run([mul,add],feed_dict={a:3,b:4}))
 
       #保存/载入线性回归模型
-import tensorflow as tf
-import numpy as np
-import matplotlib.pyplot as plt
+# import tensorflow as tf
+# import numpy as np
+# import matplotlib.pyplot as plt
 
-plotdata = { "batchsize":[], "loss":[] }
+# plotdata = { "batchsize":[], "loss":[] }
 
-def moving_average(a, w=10):
-    if len(a) < w: 
-        return a[:]    
-    return [val if idx < w else sum(a[(idx-w):idx])/w for idx, val in enumerate(a)]
+# def moving_average(a, w=10):
+#     if len(a) < w: 
+#         return a[:]    
+#     return [val if idx < w else sum(a[(idx-w):idx])/w for idx, val in enumerate(a)]
 
-train_X=np.linspace(-1,1,100)
-print(train_X.shape)
-train_Y=2*train_X+np.random.randn(*train_X.shape)*0.5
-plt.plot(train_X,train_Y,'ro',label='Original data')
-plt.legend()
-plt.show()
+# train_X=np.linspace(-1,1,100)
+# print(train_X.shape)
+# train_Y=2*train_X+np.random.randn(*train_X.shape)*0.5
+# plt.plot(train_X,train_Y,'ro',label='Original data')
+# plt.legend()
+# plt.show()
 
-tf.reset_default_graph()
+# tf.reset_default_graph()
 
-X=tf.placeholder("float")
-Y=tf.placeholder("float")
+# X=tf.placeholder("float")
+# Y=tf.placeholder("float")
 
-#模型参数
-W=tf.Variable(tf.random_normal([1]),name="weight")
-b=tf.Variable(tf.zeros([1]),name='bias')
-#前向结构
-Z=tf.multiply(X,W)+b
+# #模型参数
+# W=tf.Variable(tf.random_normal([1]),name="weight")
+# b=tf.Variable(tf.zeros([1]),name='bias')
+# #前向结构
+# Z=tf.multiply(X,W)+b
 
-#反向优化
-cost=tf.reduce_mean(tf.square(Y-Z))
-learning_rate=0.01
-optimizer=tf.train.GradientDescentOptimizer(learning_rate).minimize(cost)
+# #反向优化
+# cost=tf.reduce_mean(tf.square(Y-Z))
+# learning_rate=0.01
+# optimizer=tf.train.GradientDescentOptimizer(learning_rate).minimize(cost)
 
-#初始化所有变量
-init=tf.global_variables_initializer()
-#定义参数
-train_epochs=20
-display_step=2
+# #初始化所有变量
+# init=tf.global_variables_initializer()
+# #定义参数
+# train_epochs=20
+# display_step=2
 
-saver=tf.train.Saver()
-savedir="log/"
+# saver=tf.train.Saver()
+# savedir="log/"
 
 #启动session
 # with tf.Session() as sess:
@@ -103,10 +103,10 @@ savedir="log/"
 #     print ("cost=", sess.run(cost, feed_dict={X: train_X, Y: train_Y}), "W=", sess.run(W), "b=", sess.run(b))
 
 #载入模型测试
-with tf.Session() as sess2:
-    sess2.run(tf.global_variables_initializer())
-    saver.restore(sess2,savedir+"linermodel.cpkt")
-    print("x=6,z=",sess2.run(Z,feed_dict={X:6}))
+# with tf.Session() as sess2:
+#     sess2.run(tf.global_variables_initializer())
+#     saver.restore(sess2,savedir+"linermodel.cpkt")
+#     print("x=6,z=",sess2.run(Z,feed_dict={X:6}))
 
 
 
@@ -128,6 +128,15 @@ with tf.Session() as sess2:
 
     # print ("x=0.2，z=", sess.run(Z, feed_dict={X: 0.2}))
 
-
-
- 
+#模型内容
+# import tensorflow as tf
+# from tensorflow.python.tools.inspect_checkpoint import print_tensors_in_checkpoint_file
+# saverdir="log/"
+# w=tf.Variable(1.0,name="Weight")
+# b=tf.Variable(2.0,name="bias")
+# cc=tf.Variable(3.1,name="bias2")
+# saver=tf.train.Saver({'weight':b,'bias':w,'bias2':cc})
+# with tf.Session() as sess:
+#        tf.global_variables_initializer().run()
+#        saver.save(sess,saverdir+"linermodel.cpkt")
+# print_tensors_in_checkpoint_file(saverdir+"linermodel.cpkt", None, True) 
